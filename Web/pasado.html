@@ -110,7 +110,7 @@
       </div>
 
       <div style="margin-top: 30px; text-align: center;">
-        <a href="#" class="boton-retro" id="irLaberinto">IR AL LABERINTO</a>
+        <a href="laberinto.html" id="irLaberinto" class="boton-retro">IR AL LABERINTO</a>
         <a href="index.html" class="boton-retro">VOLVER AL INICIO</a>
       </div>
 
@@ -122,11 +122,11 @@
 
   <script>
     const lineas = [
-      "> Explorando ruinas antiguas...",
-      "> Analizando símbolos rupestres...",
-      "> Encontrado: mapa ancestral hacia el laberinto temporal.",
-      "> ¿Deseas iniciar la exploración? [Y/N]"
+     "> Explorando ruinas antiguas...",
+     "> Analizando símbolos rupestres...",
+     "> Encontrado: mapa ancestral hacia el laberinto temporal."
     ];
+
 
     const consola = document.getElementById("textoConsola");
     const entrada = document.getElementById("entradaUsuario");
@@ -141,8 +141,8 @@
         index++;
         setTimeout(escribirLetraPorLetra, 40);
       } else {
-        entrada.style.display = "inline-block";
-        input.focus();
+        //entrada.style.display = "inline-block";
+        //input.focus();
       }
     }
 
@@ -162,12 +162,13 @@
     });
 
     function mostrarMensajeYLuegoRedirigir() {
-      const mensaje = document.getElementById('mensajeFinal');
-      mensaje.style.display = 'block';
-      setTimeout(() => {
-        window.location.href = "laberinto/laberinto.html";
-      }, 1800);
-    }
+    const mensaje = document.getElementById('mensajeFinal');
+    mensaje.style.display = 'block';
+    setTimeout(() => {
+    window.location.href = "laberinto.html"; // ← Esta es la línea corregida
+    }, 1800);
+  }
+
 
     escribirLetraPorLetra();
   </script>
