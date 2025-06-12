@@ -1,30 +1,126 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Viaje en el Tiempo</title>
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estiloRetro.css">
+
+  <style>
+    body {
+      background-color: black;
+      color: #9900d6;
+      font-family: 'VT323', monospace;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .intro, .menu {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #consoleText {
+      font-size: 24px;
+      white-space: pre-wrap;
+      padding: 20px;
+    }
+
+    .blink {
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%   { opacity: 1; }
+      50%  { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    button {
+      font-size: 24px;
+      margin: 10px;
+      background: black;
+      color: #9900d6;
+      border: 2px solid #9900d6;
+      padding: 10px 30px;
+      cursor: pointer;
+      font-family: 'VT323', monospace;
+    }
+
+    button:hover {
+      background-color: #9900d6;
+      color: black;
+    }
+  </style>
 </head>
 <body>
-  <div class="stars"></div>
+  <div class="intro" id="intro">
+    <div id="consoleText">Cargando sistema temporal</div>
+    <div class="blink">█</div>
+  </div>
 
-  <header>
-    <h1 class="title">Viaje en el Tiempo</h1>
-    <p class="subtitle">Explora el pasado, el presente, el futuro... y enfréntate al laberinto del destino</p>
-  </header>
+  <div class="menu hidden" id="mainMenu">
+    <h1>🕹️ Viaje en el Tiempo</h1>
+    <button onclick="goTo('pasado.html')">⏳ Pasado</button>
+    <button onclick="goTo('futuro.html')">🚀 Futuro</button>
+    <button onclick="goTo('laberinto.html')">🧩 Laberinto de Decisiones</button>
+  </div>
 
-  <nav>
-    <a href="../pasado/pasado.html">Pasado</a>
-    <a href="../presente/presente.html">Presente</a>
-    <a href="../futuro/futuro.html">Futuro</a>
-    <a href="../laberinto/laberinto.html">Laberinto</a>
+  <audio id="beep" src="https://www.myinstants.com/media/sounds/beep.mp3"></audio>
 
+  <script>
+    const textLines = [
+      "Cargando sistema temporal...",
+      "Inicializando simulador de épocas...",
+      "Conectando al nodo cuántico...",
+      "Preparando consola retro...",
+      "¡Listo para viajar en el tiempo!"
+    ];
 
-  </nav>
+    let index = 0;
+    const consoleText = document.getElementById("consoleText");
+    const beep = document.getElementById("beep");
 
-  <footer>
-    <p>Proyecto integrador - Técnica en Programación | 2025</p>
-  </footer>
+    function typeLine(lineIndex) {
+      if (lineIndex >= textLines.length) {
+        setTimeout(() => {
+          document.getElementById("intro").classList.add("hidden");
+          document.getElementById("mainMenu").classList.remove("hidden");
+        }, 500);
+        return;
+      }
+
+      let charIndex = 0;
+      consoleText.textContent = "";
+
+      function typeChar() {
+        if (charIndex < textLines[lineIndex].length) {
+          consoleText.textContent += textLines[lineIndex][charIndex];
+          beep.play();
+          charIndex++;
+          setTimeout(typeChar, 70);
+        } else {
+          setTimeout(() => typeLine(lineIndex + 1), 600);
+        }
+      }
+
+      typeChar();
+    }
+
+    window.onload = () => {
+      typeLine(0);
+    };
+
+    function goTo(page) {
+      window.location.href = page;
+    }
+  </script>
 </body>
 </html>

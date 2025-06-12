@@ -1,0 +1,36 @@
+body {
+  background-color: black;
+  color: #c770f0;
+  font-family: 'VT323', monospace;
+  font-size: 1.5rem;
+  margin: 0;
+  padding: 2rem;
+  overflow: hidden;
+}
+
+a {
+  color: #ffccff;
+  text-decoration: none;
+  display: block;
+  margin: 1rem 0;
+}
+
+a:hover {
+  color: #ffffff;
+  text-shadow: 0 0 10px #c770f0;
+}
+
+.contenedor {
+  max-width: 800px;
+  margin: auto;
+  border: 3px solid #c770f0;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 20px #c770f0;
+  animation: parpadeo 1s infinite;
+}
+
+@keyframes parpadeo {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.95; }
+}

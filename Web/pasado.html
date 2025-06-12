@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pasado - Viaje en el Tiempo</title>
+  <link rel="stylesheet" href="estiloRetro.css">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
+  <audio id="musicaFondo" src="assetsss/musica8bits.mp3" autoplay loop></audio>
+  <script src="audioPersistente.js" defer></script>
+  <style>
+    body {
+      overflow-y: auto;
+      height: 100vh;
+      background: url('prehistoric-dinosaurs-8bit-pixel-game-landscape-vector.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #e6ccff;
+      font-family: 'VT323', monospace;
+    }
+    .contenido {
+      max-width: 800px;
+      margin: 50px auto;
+      text-align: left;
+      animation: fadeIn 1.2s ease-in-out;
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .datos {
+      border-left: 4px solid #e600ff;
+      padding-left: 15px;
+      margin-bottom: 20px;
+    }
+    .consola-box {
+      background-color: #000000cc;
+      padding: 20px;
+      border: 2px dashed #e600ff;
+      margin-top: 30px;
+      animation: typeIn 2s steps(40);
+    }
+    .boton-retro {
+      background: black;
+      color: #c770f0;
+      border: 2px solid #c770f0;
+      padding: 10px 20px;
+      margin: 10px;
+      text-transform: uppercase;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: inline-block;
+    }
+    .boton-retro:hover {
+      background: #c770f0;
+      color: black;
+    }
+    .mensaje-final {
+      display: none;
+      color: #e600ff;
+      text-align: center;
+      margin-top: 20px;
+      font-size: 1.3rem;
+      animation: parpadeo 1s infinite;
+    }
+    @keyframes parpadeo {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes typeIn {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    .titulo-animado {
+      font-size: 2.5rem;
+      text-align: center;
+      color: #ff66ff;
+      animation: mover 2s infinite alternate ease-in-out, parpadeo 1.5s infinite;
+      margin-top: 30px;
+    }
+    @keyframes mover {
+      from { transform: translateX(-10px); }
+      to { transform: translateX(10px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="pantalla">
+    <h1 class="titulo-animado">== VIAJE AL PASADO ==</h1>
+    <div class="contenido">
+      <div class="datos">
+        <h2>&#128293; Curiosidades de la Prehistoria</h2>
+        <ul>
+          <li>Los primeros humanos usaban fuego desde hace más de 1 millón de años.</li>
+          <li>El arte rupestre es una de las formas más antiguas de comunicación.</li>
+          <li>Se cree que los neandertales tenían rituales funerarios complejos.</li>
+          <li>Los humanos domesticaron lobos antes que vacas o caballos.</li>
+          <li>Algunas herramientas de piedra eran tan eficientes que se usaron durante miles de años sin cambios.</li>
+        </ul>
+      </div>
+
+      <div class="consola-box" id="consola">
+        <pre id="textoConsola" style="font-family: 'VT323', monospace; font-size: 1.2rem;"></pre>
+        <div id="entradaUsuario" style="display:none;">
+          <label for="inputRespuesta">&gt; </label>
+          <input type="text" id="inputRespuesta" maxlength="1" style="background: black; color: #e600ff; border: none; font-family: 'VT323', monospace; font-size: 1.2rem;" autofocus>
+        </div>
+      </div>
+
+      <div style="margin-top: 30px; text-align: center;">
+        <a href="#" class="boton-retro" id="irLaberinto">IR AL LABERINTO</a>
+        <a href="index.html" class="boton-retro">VOLVER AL INICIO</a>
+      </div>
+
+      <div id="mensajeFinal" class="mensaje-final">
+        🚀 Cargando el laberinto temporal...
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const lineas = [
+      "> Explorando ruinas antiguas...",
+      "> Analizando símbolos rupestres...",
+      "> Encontrado: mapa ancestral hacia el laberinto temporal.",
+      "> ¿Deseas iniciar la exploración? [Y/N]"
+    ];
+
+    const consola = document.getElementById("textoConsola");
+    const entrada = document.getElementById("entradaUsuario");
+    const input = document.getElementById("inputRespuesta");
+
+    let textoCompleto = lineas.join("\n") + "\n";
+    let index = 0;
+
+    function escribirLetraPorLetra() {
+      if (index < textoCompleto.length) {
+        consola.textContent += textoCompleto.charAt(index);
+        index++;
+        setTimeout(escribirLetraPorLetra, 40);
+      } else {
+        entrada.style.display = "inline-block";
+        input.focus();
+      }
+    }
+
+    input.addEventListener("keyup", function(e) {
+      const valor = input.value.toLowerCase();
+      if (valor === "y") {
+        mostrarMensajeYLuegoRedirigir();
+      } else if (valor === "n") {
+        window.location.href = "index.html";
+      }
+    });
+
+    const botonLaberinto = document.getElementById('irLaberinto');
+    botonLaberinto.addEventListener('click', function(e) {
+      e.preventDefault();
+      mostrarMensajeYLuegoRedirigir();
+    });
+
+    function mostrarMensajeYLuegoRedirigir() {
+      const mensaje = document.getElementById('mensajeFinal');
+      mensaje.style.display = 'block';
+      setTimeout(() => {
+        window.location.href = "laberinto/laberinto.html";
+      }, 1800);
+    }
+
+    escribirLetraPorLetra();
+  </script>
+</body>
+</html>
+
+
