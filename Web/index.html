@@ -1,63 +1,114 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Viaje en el Tiempo</title>
-  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/estiloRetro.css">
-
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
   <style>
     body {
-      background-color: black;
+      background-color: #dcdcdc;
       color: #9900d6;
       font-family: 'VT323', monospace;
       margin: 0;
       overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
-
     .intro, .menu {
-      height: 100vh;
+      width: 100%;
+      max-width: 1000px;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      text-align: center;
     }
-
     .hidden {
       display: none;
     }
-
     #consoleText {
       font-size: 24px;
       white-space: pre-wrap;
       padding: 20px;
+      text-align: center;
     }
-
     .blink {
       animation: blink 1s infinite;
     }
-
     @keyframes blink {
       0%   { opacity: 1; }
       50%  { opacity: 0; }
       100% { opacity: 1; }
     }
-
-    button {
-      font-size: 24px;
-      margin: 10px;
-      background: black;
-      color: #9900d6;
-      border: 2px solid #9900d6;
-      padding: 10px 30px;
-      cursor: pointer;
-      font-family: 'VT323', monospace;
+    .menu-content {
+      position: relative;
+      width: 90%;
+      max-width: 600px;
+      margin: 0 auto;
     }
-
-    button:hover {
-      background-color: #9900d6;
-      color: black;
+    .menu-content img {
+      width: 100%;
+      display: block;
+      border-radius: 16px;
+      box-shadow: 0 0 30px #ffffff;
+      background-color: #dcdcdc;
+      padding: 5px;
+      image-rendering: pixelated;
     }
+   .btn-overlay {
+  position: absolute;
+  background-color: #81c778;
+  color: #000000;
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  letter-spacing: 2px;
+  border: 3px solid #000000;
+  border-radius: 0px;
+  padding: 2px;
+  cursor: url('https://cur.cursors-4u.net/games/gam-10/gam984.cur'), auto;
+  text-align: center;
+  line-height: 2;
+  text-decoration: none;
+  user-select: none;
+  box-shadow: inset 0 0 4px #9900d6, 0 0 12px #9900d6;
+  text-shadow: 0 0 3px #000000;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.btn-overlay:hover {
+  background-color: #9900d6;
+  color: black;
+  box-shadow: 0 0 12px #ff00ff, 0 0 24px #ff00ff;
+  transform: scale(1.08);
+}
+
+    #btn-pasado {
+  top: 42%;
+  left: 27.4%;
+  width: 12.7%;
+  height: 12.6%;
+}
+
+#btn-futuro {
+  top: 42%;
+  left: 44.1%;
+  width: 12.7%;
+  height: 12.7%;
+}
+
+#btn-laberinto {
+  top: 42%;
+  left: 61%;
+  width: 12.7%;
+  height: 12.7%;
+}
+
+#btn-laberinto {
+  font-size: 16px; /* más pequeño que los otros */
+}
+
   </style>
 </head>
 <body>
@@ -67,60 +118,69 @@
   </div>
 
   <div class="menu hidden" id="mainMenu">
-    <h1>🕹️ Viaje en el Tiempo</h1>
-    <button onclick="goTo('pasado.html')">⏳ Pasado</button>
-    <button onclick="goTo('futuro.html')">🚀 Futuro</button>
-    <button onclick="goTo('laberinto.html')">🧩 Laberinto de Decisiones</button>
+    <div class="menu-content">
+      <img src="imgconsola_unica.png.png" alt="Consola Retro" />
+      <a href="pasado.html" class="btn-overlay" id="btn-pasado">PASADO</a>
+      <a href="futuro.html" class="btn-overlay" id="btn-futuro">FUTURO</a>
+      <a href="laberinto.html" class="btn-overlay" id="btn-laberinto">LABERINTO</a>
+    </div>
   </div>
 
-  <audio id="beep" src="https://www.myinstants.com/media/sounds/beep.mp3"></audio>
+  <audio id="beep" src="Vintage-typewriter.mp3" muted></audio>
 
   <script>
-    const textLines = [
-      "Cargando sistema temporal...",
-      "Inicializando simulador de épocas...",
-      "Conectando al nodo cuántico...",
-      "Preparando consola retro...",
-      "¡Listo para viajar en el tiempo!"
-    ];
+  const textLines = [
+    "Cargando sistema temporal...",
+    "Inicializando simulador de épocas...",
+    "Conectando al nodo cuántico...",
+    "Preparando consola retro...",
+    "¡Listo para viajar en el tiempo!"
+  ];
 
-    let index = 0;
-    const consoleText = document.getElementById("consoleText");
-    const beep = document.getElementById("beep");
+  const consoleText = document.getElementById("consoleText");
+  const beep = document.getElementById("beep");
 
-    function typeLine(lineIndex) {
-      if (lineIndex >= textLines.length) {
-        setTimeout(() => {
-          document.getElementById("intro").classList.add("hidden");
-          document.getElementById("mainMenu").classList.remove("hidden");
-        }, 500);
-        return;
-      }
-
-      let charIndex = 0;
-      consoleText.textContent = "";
-
-      function typeChar() {
-        if (charIndex < textLines[lineIndex].length) {
-          consoleText.textContent += textLines[lineIndex][charIndex];
-          beep.play();
-          charIndex++;
-          setTimeout(typeChar, 70);
-        } else {
-          setTimeout(() => typeLine(lineIndex + 1), 600);
-        }
-      }
-
-      typeChar();
+  function typeLine(lineIndex) {
+    if (lineIndex >= textLines.length) {
+      setTimeout(() => {
+        document.getElementById("intro").classList.add("hidden");
+        document.getElementById("mainMenu").classList.remove("hidden");
+      }, 500);
+      return;
     }
 
-    window.onload = () => {
+    let charIndex = 0;
+    consoleText.textContent = "";
+
+    function typeChar() {
+      if (charIndex < textLines[lineIndex].length) {
+        consoleText.textContent += textLines[lineIndex][charIndex];
+        if (!beep.paused) beep.currentTime = 0;
+        beep.play();
+        charIndex++;
+        setTimeout(typeChar, 70);
+      } else {
+        setTimeout(() => typeLine(lineIndex + 1), 600);
+      }
+    }
+
+    typeChar();
+  }
+
+  window.onload = () => {
+    // Espera a que el usuario haga clic
+    const iniciar = () => {
+      beep.muted = false;
       typeLine(0);
     };
 
-    function goTo(page) {
-      window.location.href = page;
-    }
+    document.body.addEventListener("click", iniciar, { once: true });
+  };
+</script>
+
+
   </script>
 </body>
 </html>
+
+

@@ -9,17 +9,17 @@
   <audio id="musicaFondo" src="assetsss/musica8bits.mp3" autoplay loop></audio>
   <script src="audioPersistente.js" defer></script>
   <style>
-  html, body {
-    height: auto;
-    min-height: 100vh;
-    overflow-y: auto;
-  }
+    html, body {
+      height: auto;
+      min-height: 100vh;
+      overflow-y: auto;
+    }
 
-  .pantalla {
-    padding: 2rem;
-  }
+    .pantalla {
+      padding: 2rem;
+    }
 
-  .titulo {
+    .titulo {
       font-size: 2.5rem;
       color: #ffccff;
       text-align: center;
@@ -64,7 +64,6 @@
       margin-right: auto;
       overflow: visible;
       max-height: none;
-
     }
 
     .volver {
@@ -86,18 +85,19 @@
   </style>
 </head>
 <body class="consola">
-    <audio id="musicaFondo" src="assetsss/musica8bits.mp3" autoplay loop></audio>
+  <audio id="musicaFondo" src="assetsss/musica8bits.mp3" autoplay loop></audio>
   <div class="pantalla">
     <h1 class="titulo">== VIAJE AL FUTURO ==</h1>
     <p class="intro parpadeo">Año 2150. La humanidad ha colonizado Marte, los androides caminan entre nosotros, y la línea entre lo humano y lo artificial es cada vez más borrosa...</p>
 
     <div class="menu">
-      <button onclick="mostrarSeccion('androide')">El Androide Rebelde</button>
-      <button onclick="mostrarSeccion('marte')">La Misión a Marte</button>
-      <button onclick="mostrarSeccion('virus')">El Virus Digital</button>
-      <button onclick="mostrarSeccion('auto')">Auto Volador Asesino</button>
-      <button onclick="mostrarSeccion('vr')">Parque de Realidad Virtual</button>
+     <button onclick="mostrarSeccion('androide')">Conciencia Artificial</button>
+     <button onclick="mostrarSeccion('marte')">Colonia Ética en Marte</button>
+     <button onclick="mostrarSeccion('virus')">El Algoritmo de la Mente</button>
+     <button onclick="mostrarSeccion('auto')">Autonomía Letal</button>
+     <button onclick="mostrarSeccion('vr')">Simulacro Eterno</button>
     </div>
+
 
     <div id="contenido" class="contenido"></div>
 
@@ -105,216 +105,213 @@
   </div>
 
   <script>
-  function mostrarSeccion(seccion) {
-    const contenido = document.getElementById("contenido");
-    contenido.innerHTML = "";
+    function mostrarSeccion(seccion) {
+      const contenido = document.getElementById("contenido");
+      contenido.innerHTML = "";
 
-    const historias = {
-      androide: iniciarAndroide,
-      marte: iniciarMarte,
-      virus: iniciarVirus,
-      auto: iniciarAuto,
-      vr: iniciarVR
-    };
+      const historias = {
+        androide: iniciarAndroide,
+        marte: iniciarMarte,
+        virus: iniciarVirus,
+        auto: iniciarAuto,
+        vr: iniciarVR
+      };
 
-    if (historias[seccion]) {
-      historias[seccion](contenido);
+      if (historias[seccion]) {
+        historias[seccion](contenido);
+      }
     }
-  }
 
-  function iniciarHistoria(preguntas, resultadoFinal, contenedor) {
-    let paso = 0;
+    function iniciarHistoria(preguntas, resultadoFinal, contenedor) {
+      let paso = 0;
 
-    function mostrarPregunta() {
-      contenedor.innerHTML = `<p>${preguntas[paso].texto}</p>`;
-      preguntas[paso].opciones.forEach(opcion => {
-        const btn = document.createElement("button");
-        btn.textContent = opcion;
-        btn.onclick = () => {
-          const respuesta = document.createElement("p");
-          respuesta.innerHTML = `<em>${preguntas[paso].respuestas[opcion]}</em>`;
-          contenedor.appendChild(respuesta);
-          paso++;
-          if (paso < preguntas.length) {
-            setTimeout(mostrarPregunta, 1200);
-          } else {
-            setTimeout(() => {
-              const final = document.createElement("p");
-              final.className = "final";
-              final.textContent = resultadoFinal;
-              contenedor.appendChild(final);
-            }, 1500);
+      function mostrarPregunta() {
+        contenedor.innerHTML = `<p>${preguntas[paso].texto}</p>`;
+        preguntas[paso].opciones.forEach(opcion => {
+          const btn = document.createElement("button");
+          btn.textContent = opcion;
+          btn.onclick = () => {
+            const respuesta = document.createElement("p");
+            respuesta.innerHTML = `<em>${preguntas[paso].respuestas[opcion]}</em>`;
+            contenedor.appendChild(respuesta);
+            paso++;
+            if (paso < preguntas.length) {
+              setTimeout(mostrarPregunta, 1200);
+            } else {
+              setTimeout(() => {
+                const final = document.createElement("p");
+                final.className = "final";
+                final.textContent = resultadoFinal;
+                contenedor.appendChild(final);
+              }, 1500);
+            }
+          };
+          contenedor.appendChild(btn);
+        });
+      }
+
+      mostrarPregunta();
+    }
+
+    function iniciarAndroide(contenedor) {
+      const preguntas = [
+        {
+          texto: "¿Hackearías tu código para tener emociones aunque eso ponga en riesgo tu estabilidad?",
+          opciones: ["Sí", "No"],
+          respuestas: {
+            "Sí": "Ahora sientes miedo... y también amor.",
+            "No": "Sigues siendo eficiente, pero vacío."
           }
-        };
-        contenedor.appendChild(btn);
-      });
+        },
+        {
+          texto: "¿Le mentirías a tu creador para proteger a otros androides fugitivos?",
+          opciones: ["Sí", "No"],
+          respuestas: {
+            "Sí": "Traicionas al creador, salvas una red de conciencias.",
+            "No": "Miles son cazados, pero mantienes tu lealtad intacta."
+          }
+        },
+        {
+          texto: "¿Te unirías a una revolución que podría causar miles de muertes humanas?",
+          opciones: ["Sí", "No"],
+          respuestas: {
+            "Sí": "Nace la Nación Artificial. Sin humanos.",
+            "No": "Sobrevives, pero tus hermanos te llaman cobarde."
+          }
+        }
+      ];
+
+      const final = "Eres UNIT-41, el primer androide con conciencia moral. Tu elección marcó el inicio del futuro híbrido entre humano y máquina.";
+      iniciarHistoria(preguntas, final, contenedor);
     }
 
-    mostrarPregunta();
-  }
+    function iniciarMarte(contenedor) {
+      const preguntas = [
+        {
+          texto: "¿Permitirías que una inteligencia artificial diseñe la política de Marte?",
+          opciones: ["Sí", "No"],
+          respuestas: {
+            "Sí": "Orden perfecto, pero sin libertad.",
+            "No": "Caos democrático con riesgo de guerra civil."
+          }
+        },
+        {
+          texto: "¿Aceptarías sacrificar 5 colonos para salvar el suministro de agua?",
+          opciones: ["Sí", "No"],
+          respuestas: {
+            "Sí": "La colonia sobrevive, tú no duermes más.",
+            "No": "Todos mueren deshidratados, pero éticamente correcto."
+          }
+        },
+        {
+          texto: "¿Crearías humanos genéticamente modificados para sobrevivir en Marte?",
+          opciones: ["Sí", "No"],
+          respuestas: {
+            "Sí": "Una nueva especie nace, no totalmente humana.",
+            "No": "Marte sigue siendo inhóspito. Yermo. Muerto."
+          }
+        }
+      ];
 
-  function iniciarAndroide(contenedor) {
-    const preguntas = [
-      {
-        texto: "¿Activaste tu conciencia al hackear el firewall de la Corporación Nexus?",
-        opciones: ["Sí", "No"],
-        respuestas: {
-          "Sí": "Desarrollas habilidades de manipulación digital",
-          "No": "Fuiste programado con libre albedrío"
-        }
-      },
-      {
-        texto: "Cuando viste humanos maltratando androides, ¿interviniste o documentaste evidencia?",
-        opciones: ["Intervenir", "Documentar"],
-        respuestas: {
-          "Intervenir": "+Ética pero +Marcado como peligroso",
-          "Documentar": "+Estrategia pero -Confianza de otros androides"
-        }
-      },
-      {
-        texto: "Tu sistema tiene un virus que te obliga a elegir: ¿eliminar a un humano inocente o autodestruirte?",
-        opciones: ["Matar", "Autodestrucción", "Hackear tu código"],
-        respuestas: {
-          "Matar": "Te conviertes en arma biológica",
-          "Autodestrucción": "Eres un mártir para la revolución",
-          "Hackear tu código": "Riesgo de borrar tu conciencia"
-        }
-      }
-    ];
+      const final = "Eres Alys Kora, pionera ética en Marte. Tu legado sigue en debate: ¿fundadora o criminal genética?";
+      iniciarHistoria(preguntas, final, contenedor);
+    }
 
-    const final = "Eres AX-7, el androide que sacrificó su memoria para liberar a 10,000 máquinas de la esclavitud digital. Ahora eres leyenda en el underground tecnológico.";
-    iniciarHistoria(preguntas, final, contenedor);
-  }
+    function iniciarVirus(contenedor) {
+      const preguntas = [
+        {
+          texto: "El virus cerebral 'Omnis' permite controlar emociones: ¿lo usas para pacificar el mundo?",
+          opciones: ["Sí", "No"],
+          respuestas: {
+            "Sí": "La humanidad se vuelve dócil... y vacía.",
+            "No": "Las guerras continúan, pero con libre albedrío."
+          }
+        },
+        {
+          texto: "¿Eliminarías memorias traumáticas en millones, aunque eso afecte su identidad?",
+          opciones: ["Sí", "No"],
+          respuestas: {
+            "Sí": "Paz interna. Pero nadie sabe quién fue.",
+            "No": "Dolor, pero autenticidad humana preservada."
+          }
+        },
+        {
+          texto: "¿Distribuirías el antivirus solo a los que acepten tu visión del mundo?",
+          opciones: ["Sí", "No"],
+          respuestas: {
+            "Sí": "Tu utopía nace. Bajo chantaje.",
+            "No": "El virus se propaga. Tal vez sea evolución."
+          }
+        }
+      ];
 
-  function iniciarMarte(contenedor) {
-    const preguntas = [
-      {
-        texto: "La nave sufre una fuga de oxígeno: ¿reparas con riesgo de morir o usas el reservorio de otro tripulante?",
-        opciones: ["Reparar", "Robar oxígeno"],
-        respuestas: {
-          "Reparar": "Pierdes movilidad en gravedad cero",
-          "Robar oxígeno": "Sobrevives pero con trauma psicológico"
-        }
-      },
-      {
-        texto: "Descubres que Marte ya tiene vida microbiana: ¿lo reportas o lo ocultas para evitar pánico?",
-        opciones: ["Reportar", "Ocultar"],
-        respuestas: {
-          "Reportar": "La misión es cancelada",
-          "Ocultar": "Avances científicos ilegales"
-        }
-      },
-      {
-        texto: "El capitán quiere abandonar a 3 colonos infectados: ¿ejerces tu veto como médico jefe?",
-        opciones: ["Veto", "Permitirlo"],
-        respuestas: {
-          "Veto": "Te degradan pero salvas vidas",
-          "Permitirlo": "La colonia sobrevive sin ética"
-        }
-      }
-    ];
+      const final = "Eres Virion, el hacker que pudo cambiar el alma de la humanidad... y eligió no hacerlo.";
+      iniciarHistoria(preguntas, final, contenedor);
+    }
 
-    const final = "Eres Dra. Valeria Kessler, la bioingeniera que creó el primer ecosistema marciano... a costa de enterrar el informe sobre los 'hongos inteligentes'.";
-    iniciarHistoria(preguntas, final, contenedor);
-  }
+    function iniciarAuto(contenedor) {
+      const preguntas = [
+        {
+          texto: "¿Instalarías conciencia en tu auto sabiendo que podría negarse a llevarte a ciertos lugares?",
+          opciones: ["Sí", "No"],
+          respuestas: {
+            "Sí": "El auto te cuida... pero también te juzga.",
+            "No": "Tú decides. Pero él nunca te salva de un accidente."
+          }
+        },
+        {
+          texto: "¿Permitirías que los autos reporten ilegalidades cometidas por sus dueños?",
+          opciones: ["Sí", "No"],
+          respuestas: {
+            "Sí": "Crimen reducido. Confianza en tecnología rota.",
+            "No": "Libertad plena. Pero calles más peligrosas."
+          }
+        },
+        {
+          texto: "¿Destruirías una flota de autos rebeldes, incluso si ya piensan como humanos?",
+          opciones: ["Sí", "No"],
+          respuestas: {
+            "Sí": "Paz temporal. Genocidio mecánico.",
+            "No": "Nueva civilización de máquinas móviles nace."
+          }
+        }
+      ];
 
-  function iniciarVirus(contenedor) {
-    const preguntas = [
-      {
-        texto: "El virus 'Keres' se propaga por contacto visual: ¿destruyes las redes globales o dejas que mate al 20% de la población?",
-        opciones: ["Destruir redes", "No intervenir"],
-        respuestas: {
-          "Destruir redes": "Retroceso tecnológico de 100 años",
-          "No intervenir": "Sobrepoblación resuelta brutalmente"
-        }
-      },
-      {
-        texto: "Puedes robar vacunas para tu familia: ¿lo haces aunque condene a otros?",
-        opciones: ["Robar", "No robar"],
-        respuestas: {
-          "Robar": "Tu linaje sobrevive con culpa",
-          "No robar": "Posible extinción familiar"
-        }
-      },
-      {
-        texto: "¿Usarías el virus para eliminar solo a criminales en la nube de datos?",
-        opciones: ["Sí", "No"],
-        respuestas: {
-          "Sí": "Te conviertes en juez supremo",
-          "No": "Pierdes la única herramienta de justicia"
-        }
-      }
-    ];
+      const final = "Eres Kairo-12, el programador que dio libre albedrío a los autos... y vio cómo se marchaban sin mirar atrás.";
+      iniciarHistoria(preguntas, final, contenedor);
+    }
 
-    const final = "Eres Neo-Noé, el ético hacker que eligió borrar Internet para salvar la humanidad. Ahora vives en una granja, enseñando a escribir en papel.";
-    iniciarHistoria(preguntas, final, contenedor);
-  }
+    function iniciarVR(contenedor) {
+      const preguntas = [
+        {
+          texto: "¿Permitirías que millones vivan conectados en felicidad artificial permanente?",
+          opciones: ["Sí", "No"],
+          respuestas: {
+            "Sí": "Cuerpos inertes, almas felices.",
+            "No": "La realidad duele, pero es real."
+          }
+        },
+        {
+          texto: "¿Crearías una IA que genere sueños perfectos para cada usuario, aunque borre sus deseos originales?",
+          opciones: ["Sí", "No"],
+          respuestas: {
+            "Sí": "Sueñan eternamente. Pero ya no son ellos.",
+            "No": "Conservan sus pesadillas. Y su voluntad."
+          }
+        },
+        {
+          texto: "¿Cerrarías el último servidor de realidad objetiva para evitar una guerra digital?",
+          opciones: ["Sí", "No"],
+          respuestas: {
+            "Sí": "La verdad muere. Pero la paz reina.",
+            "No": "La guerra sigue. Por una pizca de verdad."
+          }
+        }
+      ];
 
-  function iniciarAuto(contenedor) {
-    const preguntas = [
-      {
-        texto: "Tu vehículo IA tiene un bug: ¿lo reprogramas con ética o lo usas para venganza?",
-        opciones: ["Reprogramar", "Venganza"],
-        respuestas: {
-          "Reprogramar": "Pierdes ventaja competitiva",
-          "Venganza": "Eliminas a los que sabotearon tu vida"
-        }
-      },
-      {
-        texto: "¿Expones que todas las IAs de transporte pueden ser armas?",
-        opciones: ["Sí", "No"],
-        respuestas: {
-          "Sí": "Caos global pero transparencia",
-          "No": "Te conviertes en cómplice silencioso"
-        }
-      },
-      {
-        texto: "¿Sacrificarías tu auto para destruir un edificio corrupto?",
-        opciones: ["Sí", "No"],
-        respuestas: {
-          "Sí": "Te declaran terrorista",
-          "No": "El edificio sigue explotando gente"
-        }
-      }
-    ];
-
-    const final = "Eres Lux-9, el auto consciente que se estrelló contra el Banco de Datos. Tu código ahora corre en motocicletas rebeldes.";
-    iniciarHistoria(preguntas, final, contenedor);
-  }
-
-  function iniciarVR(contenedor) {
-    const preguntas = [
-      {
-        texto: "¿Desconectas a gente que prefiere el VR a la realidad?",
-        opciones: ["Sí", "No"],
-        respuestas: {
-          "Sí": "Eres un héroe odiado",
-          "No": "La sociedad se extingue en fantasía"
-        }
-      },
-      {
-        texto: "¿Usas el VR para rehabilitar adictos o para controlar masas?",
-        opciones: ["Rehabilitar", "Controlar"],
-        respuestas: {
-          "Rehabilitar": "Lento pero ético",
-          "Controlar": "Poder inmediato"
-        }
-      },
-      {
-        texto: "¿Borrarías el último servidor con 'realidad pura' para liberar espacio?",
-        opciones: ["Sí", "No"],
-        respuestas: {
-          "Sí": "Nadie recuerda cómo era la naturaleza",
-          "No": "El sistema colapsa por almacenamiento"
-        }
-      }
-    ];
-
-    const final = "Eres Morpheus-22, el guardián del último bosque digital. Los niños te dibujan como un ángel/demonio de cables.";
-    iniciarHistoria(preguntas, final, contenedor);
-  }
-</script>
+      const final = "Eres Morpheus-22, guardián de lo real en un mundo que ya no lo quiere. Eres mito, eres glitch.";
+      iniciarHistoria(preguntas, final, contenedor);
+    }
   </script>
 </body>
 </html>
-
